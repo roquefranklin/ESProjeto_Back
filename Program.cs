@@ -1,4 +1,11 @@
+using ESProjeto_Back.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("MotofretaConnection");
+builder.Services.AddDbContext<MotofretaContext>(opts =>
+    opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 
