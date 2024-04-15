@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ESProjeto_Back.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ESProjeto_Back.Data
 {
@@ -10,5 +11,6 @@ namespace ESProjeto_Back.Data
         
         }
 
+        public DbSet<User> Users { get; set; }
     }
 }
