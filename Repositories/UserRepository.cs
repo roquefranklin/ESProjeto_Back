@@ -19,7 +19,7 @@ namespace ESProjeto_Back.Repositories
             return _context.Users.ToList();
         }
 
-        public int Criar(User user)
+        public Guid Criar(User user)
         {
             _context.Add(user);
             _context.SaveChanges();
@@ -28,6 +28,12 @@ namespace ESProjeto_Back.Repositories
         public User? GetUser(int id)
         {
             return _context.Users.Find(id);
+        }
+
+        public User? GetUserByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(user => user.Email == email);
+
         }
     }
 }

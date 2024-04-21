@@ -6,7 +6,8 @@ namespace ESProjeto_Back.Interfaces
     {
 
         public List<User> Listar();
-        public int Criar(User user);
+        public Guid Criar(User user);
         public User? getUser(int id);
+        public User? getUserByEmail(string email);
     }
 }

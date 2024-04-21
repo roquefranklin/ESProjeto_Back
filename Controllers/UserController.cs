@@ -1,12 +1,14 @@
 ﻿using ESProjeto_Back.Data.Dtos;
 using ESProjeto_Back.Interfaces;
 using ESProjeto_Back.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ESProjeto_Back.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
+    [Authorize]
     public class UserController : ControllerBase
     {
 
@@ -52,25 +54,30 @@ namespace ESProjeto_Back.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult CreateUser([FromBody] CreateUserDto userDto) {
-
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] NewUser newUser)
+        {
             try
             {
-                var createdUser = _userService.Criar(new User()
-                {
-                    FirsName = userDto.FirsName,
-                    LastName = userDto.LastName,
-                    Age = userDto.Age,
-                });
 
-                return Ok(createdUser);
+                User user = new User
+                {
+                    Email = newUser.Email,
+                    Password = newUser.Password,
+                    Nome = newUser.Nome,
+                    NickName = newUser.NickName,
+                    Perfil = newUser.Perfil
+                };
+
+                Guid newUserId = _userService.Criar(user);
+
+                return Ok(newUserId);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-        
         }
 
 

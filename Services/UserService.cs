@@ -19,13 +19,17 @@ namespace ESProjeto_Back.Services
             return _userRepository.Listar();
         }
 
-        public int Criar(User user)
+        public Guid Criar(User user)
         {
             return _userRepository.Criar(user);
         }
         public User? getUser(int id)
         {
             return _userRepository.GetUser(id);
+        }
+        public User? getUserByEmail(string email)
+        {
+            return _userRepository.GetUserByEmail(email);
         }
     }
 }
