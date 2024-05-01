@@ -9,6 +9,8 @@ namespace ESProjeto_Back.Interfaces
 {
     public interface ITokenService
     {
+        public Task StoreToken(Token token);
+        Token? FindByToken(string refreshToken);
         public static string GenerateRefreshToken(string? userEmail, string secret, string audience, string issuer)
         {
             var key = Encoding.ASCII.GetBytes(secret);
@@ -87,5 +89,6 @@ namespace ESProjeto_Back.Interfaces
                 await userManager.AddClaimAsync(user, newLastRtClaim);
 
         }
+
     }
 }

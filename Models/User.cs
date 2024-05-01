@@ -20,6 +20,8 @@ namespace ESProjeto_Back.Models
         [StringLength(1000, ErrorMessage = "The {0} must have, at least {2} and a max {1}", MinimumLength = 1)]
         public string? NickName { get; set; }
         public string? Perfil { get; set; }
+
+        public ICollection<Token> Tokens { get; }
     }
 
     public class UserLoginResponse
@@ -49,12 +51,5 @@ namespace ESProjeto_Back.Models
         public string Password { get; set; } = string.Empty;
         public string NickName { get; set; } = string.Empty;
         public string Perfil { get; set; } = string.Empty;
-    }
-
-    public class Token()
-    {
-        [Required]
-        [JsonPropertyName("refresh-token")]
-        public string? RefreshToken { get; set; }
     }
 }

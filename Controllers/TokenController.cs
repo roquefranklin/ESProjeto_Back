@@ -1,11 +1,9 @@
 ﻿using ESProjeto_Back.Interfaces;
 using ESProjeto_Back.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.Diagnostics;
 using System.Text;
 
 namespace ESProjeto_Back.Controllers
@@ -30,6 +28,11 @@ namespace ESProjeto_Back.Controllers
         {
             try
             {
+
+                if(userLogin.Email.IsNullOrEmpty() ||  userLogin.Password.IsNullOrEmpty())
+                {
+                    return BadRequest("Senha ou login em Branco");
+                }
 
                 User? user = _userService.getUserByEmail(userLogin.Email);
                 if (user == null)
@@ -61,6 +64,16 @@ namespace ESProjeto_Back.Controllers
                         issuer: issuer
                     );
 
+                _tokenService.StoreToken(new Token { 
+                    Id = Guid.NewGuid().ToString(),
+                    IsValid = true, 
+                    token = refreshToken,
+                    User = user,
+                    UserId = user.Id,
+                    Validate = DateTime.Now,
+                    TipoToken = TipoDeToken.LoginPadrao,
+                });
+
                 return Ok(new UserLoginResponse(
                     accessToken: accessToken,
                     refreshToken: refreshToken
@@ -73,7 +86,7 @@ namespace ESProjeto_Back.Controllers
         }
 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken( [FromForm] Token token )
+        public async Task<IActionResult> RefreshToken( [FromForm] RenewTokenDto token )
         {
 
             var handler = new JsonWebTokenHandler();
@@ -95,14 +108,26 @@ namespace ESProjeto_Back.Controllers
             string userId = result.Claims[JwtRegisteredClaimNames.Email].ToString()!;
             string key = _config.Jwt.Key;
 
-            User user = _userService.getUserByEmail(email);
+            User user = _userService.getUserByEmail(email)!;
 
-            //var claims = await userManager.GetClaimsAsync(user);
+            var at = ITokenService.GenerateAccessToken(user.Id.ToString(), user.Email!, key, audience, issuer);
+            var rt = ITokenService.GenerateRefreshToken(user.Email, key, audience, issuer);
 
-            var at = ITokenService.GenerateAccessToken(userId, email, key, audience, issuer);
-            var rt = ITokenService.GenerateRefreshToken(email, key, audience, issuer);
+            Token? previousToken = _tokenService.FindByToken(token.RefreshToken!);
+
+            await _tokenService.StoreToken(new Token
+            {
+                Id = Guid.NewGuid().ToString(),
+                IsValid = true,
+                token = rt,
+                User = user,
+                UserId = user.Id,
+                Validate = DateTime.Now,
+                TipoToken = TipoDeToken.LoginPadrao,
+                RefreshToken = previousToken,
+            });
+
             return Ok(new UserLoginResponse(at, rt));
-
 
         }
     }
