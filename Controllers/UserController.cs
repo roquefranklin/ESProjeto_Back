@@ -61,13 +61,20 @@ namespace ESProjeto_Back.Controllers
             try
             {
 
+                bool validNewUser = _userService.ValidateNewUser(newUser);
+                if (!validNewUser)
+                {
+                    return BadRequest("Dados Inválidos");
+                }
+
                 User user = new User
                 {
                     Email = newUser.Email,
                     Password = newUser.Password,
                     Nome = newUser.Nome,
                     NickName = newUser.NickName,
-                    Perfil = newUser.Perfil
+                    Perfil = string.Empty,
+                    PhoneNumber = string.Empty
                 };
 
                 Guid newUserId = _userService.Criar(user);
@@ -79,7 +86,6 @@ namespace ESProjeto_Back.Controllers
                 return BadRequest(e.Message);
             }
         }
-
 
     }
 }
