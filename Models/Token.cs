@@ -8,7 +8,7 @@ namespace ESProjeto_Back.Models
     {
         [Key]
         [Required]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string token { get; set; } = null!;
         public User User { get; set; } = null!;
