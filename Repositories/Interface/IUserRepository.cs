@@ -6,7 +6,8 @@ namespace ESProjeto_Back.Repositories.Interface
     {
         public List<User> Listar();
         public Guid Criar(User user);
-        User? GetUser(int id);
-        User? GetUserByEmail(string email);
+        public User? GetUser(int id);
+        public User? GetUserByEmail(string email);
+        public void updateUser(User user);
     }
 }

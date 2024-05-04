@@ -1,8 +1,10 @@
-﻿using ESProjeto_Back.Data.Dtos;
+﻿using Microsoft.Net.Http.Headers;
 using ESProjeto_Back.Interfaces;
 using ESProjeto_Back.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ESProjeto_Back.Controllers
 {
@@ -20,7 +22,8 @@ namespace ESProjeto_Back.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUser() {
+        public IActionResult GetUser()
+        {
 
             try
             {
@@ -84,6 +87,64 @@ namespace ESProjeto_Back.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPatch]
+        public IActionResult updateUserInfo([FromBody] UpdateUser updateUser)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+                if (identity == null)
+                {
+                    return BadRequest("Erro ao identificar usuário, calims não encontadas em token");
+                }
+
+                IEnumerable<Claim> claims = identity.Claims;
+
+                string userEmail = claims.FirstOrDefault(claim => claim.Type.Contains(ClaimTypes.Email)).Value ?? "";
+
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    return BadRequest($"Toekn não possui claim {JwtRegisteredClaimNames.Email} email de usuário!");
+                }
+
+                bool emailEmpty = string.IsNullOrEmpty(updateUser.Email);
+                if (emailEmpty)
+                {
+                    return BadRequest("Campo de email está vazio");
+                }
+
+                User user = _userService.getUserByEmail(userEmail);
+                if (user == null)
+                {
+                    return BadRequest($"Usuário do Email {userEmail} ,do token, não encontrado");
+                }
+
+                bool emailNotEquals = !updateUser.Email.Equals(user.Email);
+                if (emailNotEquals)
+                {
+                    return BadRequest($"Email do token({user.Email}) e email para alteração({updateUser.Email}) não são iguais");
+                }
+
+                bool hasNoAlteration = updateUser.EmptyAlterations();
+                if (hasNoAlteration)
+                {
+                    return BadRequest("Todos os campos alteráveis estão vazios!");
+                }
+                user.Nome = string.IsNullOrEmpty(updateUser.Nome) ? user.Nome : updateUser.Nome;
+                user.NickName = string.IsNullOrEmpty(updateUser.NickName) ? user.NickName : updateUser.NickName;
+                user.PhoneNumber = string.IsNullOrEmpty(updateUser.PhoneNumber) ? user.PhoneNumber : updateUser.PhoneNumber;
+                user.Perfil = string.IsNullOrEmpty(updateUser.Perfil) ? user.Perfil : updateUser.Perfil;
+                _userService.updateUser(user);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
 

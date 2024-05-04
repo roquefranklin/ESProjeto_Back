@@ -61,4 +61,18 @@ namespace ESProjeto_Back.Models
             return noEmptyPassword && noEmptyConfirmPassword && arePasswordsEquals;
         }
     }
+
+    public class UpdateUser
+    {
+        public required string Email { get; set; }
+        public string? Nome { get; set; } = string.Empty;
+        public string? NickName { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; } = string.Empty;
+        public string? Perfil { get; set; } = string.Empty;
+
+        public bool EmptyAlterations()
+        {
+            return string.IsNullOrEmpty(Nome) && string.IsNullOrEmpty(NickName) && string.IsNullOrEmpty(PhoneNumber) && string.IsNullOrEmpty(Perfil);
+        }
+    }
 }

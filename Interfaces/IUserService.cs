@@ -10,5 +10,6 @@ namespace ESProjeto_Back.Interfaces
         public User? getUser(int id);
         public User? getUserByEmail(string email);
         public bool ValidateNewUser(NewUser newUser);
+        public void updateUser(User user);
     }
 }
