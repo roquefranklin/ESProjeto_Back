@@ -1,4 +1,5 @@
 ﻿using ESProjeto_Back.Data;
+using ESProjeto_Back.Data.Dtos;
 using ESProjeto_Back.Models;
 using ESProjeto_Back.Repositories.Interface;
 
@@ -37,12 +38,57 @@ namespace ESProjeto_Back.Repositories
 
         public void updateUser(User user)
         {
-            var bankUser = _context.Users.Find(user.Id);
+            User? bankUser = _context.Users.Find(user.Id);
             bankUser.Nome = user.Nome;
             bankUser.NickName = user.NickName;
             bankUser.PhoneNumber = user.PhoneNumber;
             bankUser.Perfil = user.Perfil;
             _context.SaveChanges();
+
+        }
+
+        public async Task SetRecoveryCode(User user, string recoveryCode)
+        {
+
+            if(recoveryCode.Length != 6 || !int.TryParse(recoveryCode, out _) )
+            {
+                throw new Exception("The code has to be a 6 lenght string of numbers");
+            }
+
+            User? dataBaseUser = _context.Users.Find(user.Id);
+
+            if(dataBaseUser == null)
+            {
+                throw new Exception("User Not Found!");
+            }
+
+            dataBaseUser.RecoveryCode = recoveryCode;
+            await _context.SaveChangesAsync();
+        }
+
+        public Guid SetNewPassword(User user, NewPassword newPassword)
+        {
+            User? dataBaseUser = _context.Users.FirstOrDefault(user => user.Email == user.Email);
+
+            if (dataBaseUser == null)
+                return Guid.Empty;
+
+            dataBaseUser.Password = newPassword.Password;
+            _context.SaveChanges();
+            return dataBaseUser.Id;
+        }
+
+        public Guid ClearRecoveryCode(User user)
+        {
+
+            User? dataBaseUser = _context.Users.FirstOrDefault(user => user.Email == user.Email);
+
+            if (dataBaseUser == null)
+                return Guid.Empty;
+
+            dataBaseUser.RecoveryCode = "";
+            _context.SaveChanges();
+            return dataBaseUser.Id;
 
         }
     }
