@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using ESProjeto_Back.Data.Dtos;
 
 namespace ESProjeto_Back.Controllers
 {
@@ -90,6 +91,62 @@ namespace ESProjeto_Back.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword([FromBody] string email)
+        {
+            try
+            {
+
+                User? user = _userService.getUserByEmail(email);
+                    
+                if (user == null)
+                {
+                    return BadRequest($"Usuário de Email {user} não encontrado");
+                }
+
+                _userService.GenerateForgotCodeAndsendForgotPasswordEmail(user);
+
+                return Ok("Email para Recuperar Senha será Enviado Logo Mais!");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("new-password")]
+        public async Task<IActionResult> NewPassword([FromBody] NewPassword newPassword)
+        {
+            try
+            {
+
+                if (!newPassword.PasswordMatch())
+                {
+                    return BadRequest($"Senhas Não São Iguais");
+                }
+
+                User? user = _userService.getUserByEmail(newPassword.Email);
+
+                if (user == null )
+                    return BadRequest($"Usuário de Email \"{user}\" não encontrado");
+
+                bool result = await _userService.newUserPassword(newPassword, user);
+                
+                if (!result) {
+                    return BadRequest($"Codigo Inválido");
+                }
+
+                return Ok("Senha Atualizada com Sucesso");
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPatch]
         public IActionResult updateUserInfo([FromBody] UpdateUser updateUser)
         {
@@ -117,7 +174,7 @@ namespace ESProjeto_Back.Controllers
                     return BadRequest("Campo de email está vazio");
                 }
 
-                User user = _userService.getUserByEmail(userEmail);
+                User user = _userService.getUserByEmail(userEmail)!;
                 if (user == null)
                 {
                     return BadRequest($"Usuário do Email {userEmail} ,do token, não encontrado");
