@@ -58,6 +58,28 @@ namespace ESProjeto_Back.Controllers
             }
         }
 
+        [HttpGet("email/{email}")]
+        public IActionResult GetUserByEmail(string email)
+        {
+            try
+            {
+                var user = _userService.getUserByEmail(email);
+
+                if (user == null)
+                {
+                    return NotFound($"Usuario de email {email} não encontrado!");
+                }
+
+                user.RecoveryCode = string.Empty;
+
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] NewUser newUser)
