@@ -15,6 +15,25 @@ builder.Services.AddRepositories();
 
 builder.Services.Configure<Config>(builder.Configuration.GetSection("Config"));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("SitePolicy", builderCors =>
+    {
+        builderCors.SetIsOriginAllowedToAllowWildcardSubdomains()
+        .WithOrigins(
+            "")
+        .AllowAnyMethod().AllowAnyHeader();
+    });
+
+    options.AddPolicy("AllowAll", builderCors =>
+    {
+        builderCors
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 var connectionString = builder.Configuration.GetConnectionString("MotofretaConnection");
 builder.Services.AddDbContext<MotofretaContext>(opts =>
     opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -89,6 +108,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+if (builder.Environment.IsDevelopment())
+    app.UseCors("AllowAll");
+else
+    app.UseCors("SitePolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

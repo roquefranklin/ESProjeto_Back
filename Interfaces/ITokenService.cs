@@ -52,8 +52,6 @@ namespace ESProjeto_Back.Interfaces
 
             var identityClaims = new ClaimsIdentity();
 
-            identityClaims.AddClaim(new Claim(ClaimTypes.Email, userEmail));
-
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.Sub, userId));
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.Email, userEmail));
             identityClaims.AddClaim(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
