@@ -21,7 +21,9 @@ Passos para instalar o backend:
 
 1. BackEnd
     - Clone o repositório: `git clone https://github.com/roquefranklin/ESProjeto_Back.git`
-    - Rode o script /db/script.sql `mysql -u root -h localhost motofreta -p < /db/script.sql`
+    - Execute o script /db/script.sql `mysql -u root -h localhost motofreta -p < /db/script.sql`
+    - Execute o comando `dotnet build`
+    - Execute o comando `dotnet run`
 
 2. FrontEnd
     - Acesse [Front do projeto](https://github.com/roquefranklin/ESProjeto_Front "Front do projeto") e siga os passos do ReadMe
