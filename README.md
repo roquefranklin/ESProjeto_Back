@@ -24,4 +24,4 @@ Passos para instalar o backend:
     - Rode o script /db/script.sql `mysql -u root -h localhost motofreta -p < /db/script.sql`
 
 2. FrontEnd
-    - Acesse [Front do projeto](https://github.com/roquefranklin/ESProjeto_Front, "Front do projeto") e siga os passos do ReadMe
+    - Acesse [Front do projeto](https://github.com/roquefranklin/ESProjeto_Front "Front do projeto") e siga os passos do ReadMe
