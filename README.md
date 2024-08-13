@@ -20,8 +20,8 @@ Pré-requisitos:
 Passos para instalar o backend:
 
 1. BackEnd
-    A. Clone o repositório: `git clone https://github.com/roquefranklin/ESProjeto_Back.git`
-    B. Rode o script /db/script.sql `mysql -u root -h localhost motofreta -p < /db/script.sql`
+- Clone o repositório: `git clone https://github.com/roquefranklin/ESProjeto_Back.git`
+- Rode o script /db/script.sql `mysql -u root -h localhost motofreta -p < /db/script.sql`
 
 2. FrontEnd
 - Acesse  `https://github.com/roquefranklin/ESProjeto_Front` e siga os passos do ReadMe
