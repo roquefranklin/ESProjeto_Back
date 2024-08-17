@@ -98,6 +98,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("SitePolicy", builder =>
+    {
+
+        builder
+        .SetIsOriginAllowedToAllowWildcardSubdomains()
+        .WithOrigins(
+          ).AllowAnyMethod().AllowAnyHeader();
+    });
+
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -109,10 +128,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-if (builder.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
     app.UseCors("AllowAll");
+}
 else
+{
     app.UseCors("SitePolicy");
+}
 
 app.UseAuthentication();
 app.UseAuthorization();

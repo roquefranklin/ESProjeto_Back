@@ -24,7 +24,7 @@ namespace ESProjeto_Back.Models
 
         public ICollection<Token> Tokens { get; }
         [StringLength(6, ErrorMessage = "The {0} have to be a 6 lenght string of numbers values", MinimumLength = 6)]
-        public string RecoveryCode { get; internal set; }
+        public string? RecoveryCode { get; internal set; }
     }
 
     public class UserLoginResponse
