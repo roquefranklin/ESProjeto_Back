@@ -65,7 +65,7 @@ namespace ESProjeto_Back.Controllers
                     );
 
                 _tokenService.StoreToken(new Token { 
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid(),
                     IsValid = true, 
                     token = refreshToken,
                     User = user,
@@ -117,7 +117,7 @@ namespace ESProjeto_Back.Controllers
 
             await _tokenService.StoreToken(new Token
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 IsValid = true,
                 token = rt,
                 User = user,
