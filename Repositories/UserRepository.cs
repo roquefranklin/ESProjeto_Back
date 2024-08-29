@@ -68,7 +68,7 @@ namespace ESProjeto_Back.Repositories
 
         public Guid SetNewPassword(User user, NewPassword newPassword)
         {
-            User? dataBaseUser = _context.Users.FirstOrDefault(user => user.Email == user.Email);
+            User? dataBaseUser = _context.Users.FirstOrDefault(userDb => userDb.Email == user.Email);
 
             if (dataBaseUser == null)
                 return Guid.Empty;
