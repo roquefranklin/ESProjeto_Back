@@ -81,12 +81,12 @@ namespace ESProjeto_Back.Repositories
         public Guid ClearRecoveryCode(User user)
         {
 
-            User? dataBaseUser = _context.Users.FirstOrDefault(user => user.Email == user.Email);
+            User? dataBaseUser = _context.Users.FirstOrDefault(userDb => userDb.Email == user.Email);
 
             if (dataBaseUser == null)
                 return Guid.Empty;
 
-            dataBaseUser.RecoveryCode = "";
+            dataBaseUser.RecoveryCode = null;
             _context.SaveChanges();
             return dataBaseUser.Id;
 

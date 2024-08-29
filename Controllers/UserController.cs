@@ -115,10 +115,11 @@ namespace ESProjeto_Back.Controllers
 
         [AllowAnonymous]
         [HttpPost("forgot-password")]
-        public IActionResult ForgotPassword([FromBody] string email)
+        public IActionResult ForgotPassword([FromBody] ForgotPassword forgotPassword)
         {
             try
             {
+                var email = forgotPassword.email;
 
                 User? user = _userService.getUserByEmail(email);
                     
@@ -129,7 +130,7 @@ namespace ESProjeto_Back.Controllers
 
                 _userService.GenerateForgotCodeAndsendForgotPasswordEmail(user);
 
-                return Ok("Email para Recuperar Senha será Enviado Logo Mais!");
+                return Ok(new {Message = "Email para Recuperar Senha será Enviado Logo Mais!" });
             }
             catch (Exception e)
             {
