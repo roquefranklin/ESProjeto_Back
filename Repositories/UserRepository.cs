@@ -74,6 +74,7 @@ namespace ESProjeto_Back.Repositories
                 return Guid.Empty;
 
             dataBaseUser.Password = newPassword.Password;
+            dataBaseUser.RecoveryCode = "";
             _context.SaveChanges();
             return dataBaseUser.Id;
         }

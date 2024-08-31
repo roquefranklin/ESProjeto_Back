@@ -11,6 +11,7 @@ namespace ESProjeto_Back.Infrastructure
 
             repositories.AddScoped<IUserRepository, UserRepository>();
             repositories.AddScoped<ITokenRepository, TokenRepository>();
+            repositories.AddScoped<IStopPointAssessmentRepository, StopPointAssessmentRepository>();
 
             return repositories;
         }

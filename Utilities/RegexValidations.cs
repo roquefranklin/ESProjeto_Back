@@ -14,7 +14,7 @@ namespace ESProjeto_Back.Utilities
 
             try
             {
-                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200));
+                email = Regex.Replace(email, @"(@)  (.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200));
 
                 string DomainMapper(Match match)
                 {

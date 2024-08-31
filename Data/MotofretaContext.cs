@@ -17,5 +17,6 @@ namespace ESProjeto_Back.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Token> Token { get; set; }
+        public DbSet<StopPoint> StopPoints { get; set; }
     }
 }

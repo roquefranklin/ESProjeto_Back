@@ -9,6 +9,7 @@ namespace ESProjeto_Back.Infrastructure
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IStopPointService, StopPointAssessmentService>();
 
             return services;
         }
