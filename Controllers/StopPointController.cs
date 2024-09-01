@@ -21,6 +21,24 @@ namespace ESProjeto_Back.Controllers
             _userService = userService;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetStopPointInfo(Guid id)
+        {
+
+            try
+            {
+
+                var stopPointData = _stopPointService.GetStopPointData(id);
+
+                return Ok(stopPointData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
+        }
+
         [HttpPost("new-stop-point")]
         public IActionResult CreateNewStopPoint([FromBody] CreateStopPointDto newStopPoint)
         {

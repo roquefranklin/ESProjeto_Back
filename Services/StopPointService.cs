@@ -11,7 +11,7 @@ namespace ESProjeto_Back.Services
     public class StopPointService : IStopPointService
     {
 
-        private static IStopPointRepository _stopPointRepository;
+        private readonly IStopPointRepository _stopPointRepository;
 
         public StopPointService(Repositories.Interface.IStopPointRepository stopPointAssessmentRepository)
         {
@@ -20,11 +20,20 @@ namespace ESProjeto_Back.Services
 
         public Guid NewStopPoint(CreateStopPointDto newStopPoint, User user)
         {
-            GeolocationPosition geolocationPosition = newStopPoint.StopPointPosition;
-            if (geolocationPosition == null)
+
+            if (newStopPoint == null)
+                throw new ArgumentNullException(nameof(newStopPoint));
+
+            if (newStopPoint.StopPointPosition == null)
             {
-                throw new Exception("No Stop Point Coordinates");
+                throw new ArgumentNullException(nameof(newStopPoint.StopPointPosition));
             }
+            else if (newStopPoint.StopPointPosition.coords == null)
+            {
+                throw new ArgumentNullException(nameof(newStopPoint.StopPointPosition.coords));
+            }
+
+            GeolocationPosition geolocationPosition = newStopPoint.StopPointPosition;
 
             GeolocationCoordinates coordinates = geolocationPosition.coords;
 
@@ -36,7 +45,6 @@ namespace ESProjeto_Back.Services
 
             if (coordinates.longitude == null)
                 throw new Exception("No longitude on Stop Point Coordinates");
-
 
             float latitude = (float)coordinates.latitude;
             float longitude = (float)coordinates.longitude;
@@ -62,6 +70,26 @@ namespace ESProjeto_Back.Services
             var stopPoints = _stopPointRepository.GetPointsOnRadiousOf(latitude, longitude, radius);
 
             return stopPoints;
+        }
+
+        public GetStopPointDataDto GetStopPointData(Guid id)
+        {
+
+            var stopPointData = _stopPointRepository.GetStopPointInfo(id);
+
+            if(stopPointData == null)
+                throw new ArgumentNullException($"Stop Point of id {id} not found");
+
+            var stopPoint = new GetStopPointDataDto()
+            {
+                Id = stopPointData.Id,
+                Name = stopPointData.Name,
+                Latitude = stopPointData.latitude,
+                Longitude = stopPointData.longitude,
+                Description = ""
+            };
+
+            return stopPoint;
         }
     }
 }

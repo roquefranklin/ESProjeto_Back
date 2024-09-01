@@ -39,5 +39,11 @@ namespace ESProjeto_Back.Repositories
 
             return stoppoints;
         }
+
+        public StopPoint? GetStopPointInfo(Guid id)
+        {
+            var stopPoint = _context.StopPoints.FirstOrDefault((point) => point.Id == id);
+            return stopPoint;
+        }
     }
 }
