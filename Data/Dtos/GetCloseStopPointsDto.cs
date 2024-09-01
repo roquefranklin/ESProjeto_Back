@@ -2,7 +2,7 @@
 {
     public class GetCloseStopPointsDto
     {
-        public List<StopPointData> StopPoints { get; set; }
+        public List<StopPointData> StopPoints { get; set; } = new List<StopPointData>();
     }
 
     public class StopPointData

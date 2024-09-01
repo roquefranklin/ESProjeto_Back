@@ -218,6 +218,7 @@ namespace ESProjeto_Back.Controllers
                 user.NickName = string.IsNullOrEmpty(updateUser.NickName) ? user.NickName : updateUser.NickName;
                 user.PhoneNumber = string.IsNullOrEmpty(updateUser.PhoneNumber) ? user.PhoneNumber : updateUser.PhoneNumber;
                 user.Perfil = string.IsNullOrEmpty(updateUser.Perfil) ? user.Perfil : updateUser.Perfil;
+                
                 _userService.updateUser(user);
 
                 return Ok();

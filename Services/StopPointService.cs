@@ -85,8 +85,7 @@ namespace ESProjeto_Back.Services
                 Id = stopPointData.Id,
                 Name = stopPointData.Name,
                 Latitude = stopPointData.latitude,
-                Longitude = stopPointData.longitude,
-                Description = ""
+                Longitude = stopPointData.longitude
             };
 
             return stopPoint;
