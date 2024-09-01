@@ -1,18 +1,21 @@
 ﻿using ESProjeto_Back.Data.Dtos;
 using ESProjeto_Back.Interfaces;
 using ESProjeto_Back.Models;
+using ESProjeto_Back.Repositories;
 using ESProjeto_Back.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 
 namespace ESProjeto_Back.Services
 {
-    public class StopPointAssessmentService : IStopPointService
+    public class StopPointService : IStopPointService
     {
 
-        private static IStopPointAssessmentRepository _stopPointAssessmentRepository;
+        private static IStopPointRepository _stopPointRepository;
 
-        public StopPointAssessmentService(Repositories.Interface.IStopPointAssessmentRepository stopPointAssessmentRepository)
+        public StopPointService(Repositories.Interface.IStopPointRepository stopPointAssessmentRepository)
         {
-            _stopPointAssessmentRepository = stopPointAssessmentRepository;
+            _stopPointRepository = stopPointAssessmentRepository;
         }
 
         public Guid NewStopPoint(CreateStopPointDto newStopPoint, User user)
@@ -49,9 +52,16 @@ namespace ESProjeto_Back.Services
                 UserId = user.Id
             };
 
-            Guid stopPointId = _stopPointAssessmentRepository.SetNewStopPoint(stopPoint, latitude, longitude);
+            Guid stopPointId = _stopPointRepository.SetNewStopPoint(stopPoint, latitude, longitude);
 
             return stopPointId;
+        }
+
+        public GetCloseStopPointsDto GetCloseStopPoints(float latitude, float longitude, float radius)
+        {
+            var stopPoints = _stopPointRepository.GetPointsOnRadiousOf(latitude, longitude, radius);
+
+            return stopPoints;
         }
     }
 }

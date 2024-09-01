@@ -12,12 +12,12 @@ namespace ESProjeto_Back.Controllers
     public class StopPointController : ControllerBase
     {
 
-        private static IStopPointService _stopPointAssessmentService;
+        private static IStopPointService _stopPointService;
         private static IUserService _userService;
 
         public StopPointController(IStopPointService stopPointAssessmentService, IUserService userService)
         {
-            _stopPointAssessmentService = stopPointAssessmentService;
+            _stopPointService = stopPointAssessmentService;
             _userService = userService;
         }
 
@@ -37,7 +37,7 @@ namespace ESProjeto_Back.Controllers
                 if (user == null)
                     return BadRequest($"User of Email \"{newStopPoint.userCreatorEmail}\" was not found");
 
-                Guid stopPointId = _stopPointAssessmentService.NewStopPoint(newStopPoint, user);
+                Guid stopPointId = _stopPointService.NewStopPoint(newStopPoint, user);
 
                 return Ok(new { stopPointId });
             }
@@ -47,7 +47,26 @@ namespace ESProjeto_Back.Controllers
             }
         }
 
+        [HttpGet("get-stop-points")]
+        public IActionResult GetClosePointsTo([FromQuery] float latitude, [FromQuery] float longitude, [FromQuery] float radius)
+        {
+            try
+            {
 
+                if (radius <= 0)
+                    radius = 10;
+
+                GetCloseStopPointsDto closePoints = _stopPointService.GetCloseStopPoints(latitude, longitude, radius);
+
+                return Ok(closePoints);
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+        }
 
     }
 }

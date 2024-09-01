@@ -2,6 +2,8 @@
 using ESProjeto_Back.Data.Dtos;
 using ESProjeto_Back.Models;
 using ESProjeto_Back.Repositories.Interface;
+using MySqlConnector;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ESProjeto_Back.Repositories
 {
