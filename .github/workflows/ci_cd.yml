@@ -51,4 +51,4 @@ jobs:
             key: ${{ secrets.AWS_SSH_KEY }}
             port: "22"
             script: |
-              sudo systemctl restart
+              sudo systemctl restart motofreta-back.service
