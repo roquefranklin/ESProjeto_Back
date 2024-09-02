@@ -47,7 +47,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
             host: "35.247.214.184"
-            username: "node"
+            username: "ubuntu"
             key: ${{ secrets.AWS_SSH_KEY }}
             port: "22"
             script: |
