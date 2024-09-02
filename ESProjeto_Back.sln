@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESProjeto_Back", "ESProjeto_Back.csproj", "{4D63ECF7-E253-49B1-9903-F79266A166B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESProjeto_BackTests", "..\ESProjeto_BackTests\ESProjeto_BackTests.csproj", "{CCA8321D-3DCD-4BD0-89C2-27303A69D7D6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
