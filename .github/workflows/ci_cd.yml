@@ -52,4 +52,4 @@ jobs:
             port: "22"
             script: |
               cd back              
-              dotnet motofreta.dll
+              dotnet ESProjeto_Back.dll
