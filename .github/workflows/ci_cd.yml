@@ -51,5 +51,5 @@ jobs:
             key: ${{ secrets.AWS_SSH_KEY }}
             port: "22"
             script: |
-              cd back              
+              cd back/output/             
               dotnet ESProjeto_Back.dll
