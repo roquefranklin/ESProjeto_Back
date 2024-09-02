@@ -46,7 +46,7 @@ jobs:
       - name: Run stop/start service
         uses: appleboy/ssh-action@master
         with:
-            host: "35.247.214.184"
+            host: "54.235.229.160"
             username: "ubuntu"
             key: ${{ secrets.AWS_SSH_KEY }}
             port: "22"
