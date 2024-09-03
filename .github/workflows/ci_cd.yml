@@ -43,6 +43,16 @@ jobs:
             remote_user: ubuntu
             remote_key: ${{ secrets.AWS_SSH_KEY }}
 
+      - name: rsync deployment Migrations/
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+            switches: -avz 
+            path: Migrations/
+            remote_path: /home/ubuntu/back
+            remote_host: "54.235.229.160"
+            remote_user: ubuntu
+            remote_key: ${{ secrets.AWS_SSH_KEY }}
+    
       - name: Run stop/start service
         uses: appleboy/ssh-action@master
         with:
