@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
     {
         builderCors.SetIsOriginAllowedToAllowWildcardSubdomains()
         .WithOrigins(
-            "")
+            "https://web.motofreta.com.br")
         .AllowAnyMethod().AllowAnyHeader();
     });
 
@@ -105,7 +105,7 @@ builder.Services.AddCors(options =>
 
         builder
         .SetIsOriginAllowedToAllowWildcardSubdomains()
-        .WithOrigins(
+        .WithOrigins( "https://web.motofreta.com.br"
           ).AllowAnyMethod().AllowAnyHeader();
     });
 
