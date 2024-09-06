@@ -12,7 +12,7 @@ namespace ESProjeto_Back.Infrastructure
             repositories.AddScoped<IUserRepository, UserRepository>();
             repositories.AddScoped<ITokenRepository, TokenRepository>();
             repositories.AddScoped<IStopPointRepository, StopPointRepository>();
-
+            repositories.AddScoped<IReviewRepository, ReviewRepository>();
             return repositories;
         }
 
