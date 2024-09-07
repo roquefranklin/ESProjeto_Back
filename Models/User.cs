@@ -21,8 +21,8 @@ namespace ESProjeto_Back.Models
         public string? NickName { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Perfil { get; set; }
-
         public ICollection<Token> Tokens { get; }
+        public ICollection<Review> Reviews { get; }
         [StringLength(6, ErrorMessage = "The {0} have to be a 6 lenght string of numbers values", MinimumLength = 6)]
         public string? RecoveryCode { get; internal set; }
     }

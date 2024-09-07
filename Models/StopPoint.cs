@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -21,6 +22,7 @@ namespace ESProjeto_Back.Models
         public DateTime creationDate { get; set; }
         public User User { get; set; } = null!;
         public Guid UserId { get; set; } = Guid.Empty!;
+        public Collection<Review> Reviews { get; }
     }
 
     public class GeolocationPosition
