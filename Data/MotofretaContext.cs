@@ -20,5 +20,6 @@ namespace ESProjeto_Back.Data
         public DbSet<Token> Token { get; set; }
         public DbSet<StopPoint> StopPoints { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<SpecificReview> SpecificReviews { get; set; }
     }
 }

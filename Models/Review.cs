@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace ESProjeto_Back.Models
 {
@@ -18,5 +19,6 @@ namespace ESProjeto_Back.Models
         [Required, Range(0,5, ErrorMessage ="A pontuação deve ser entre 0 e 5")]
         public int ReviewScore { get; set; }
         public string? Description { get; set; }
+        public Collection<SpecificReview> SpecificReviews { get;  set; }
     }
 }
