@@ -34,7 +34,7 @@ namespace ESProjeto_Back.Repositories
 
             GetCloseStopPointsDto stoppoints = new GetCloseStopPointsDto()
             {
-                StopPoints = locations.Select(stopPointDb => new StopPointData() { Latitude = stopPointDb.latitude, Longitude = stopPointDb.longitude, Name = stopPointDb.Name }).ToList()
+                StopPoints = locations.Select(stopPointDb => new StopPointData() { Id = stopPointDb.Id, Latitude = stopPointDb.latitude, Longitude = stopPointDb.longitude, Name = stopPointDb.Name }).ToList()
             };
 
             return stoppoints;

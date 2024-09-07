@@ -15,7 +15,7 @@ namespace ESProjeto_Back.Models
         public StopPoint StopPoint { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
-        [Required, Range(0,5)]
+        [Required, Range(0,5, ErrorMessage ="A pontuação deve ser entre 0 e 5")]
         public int ReviewScore { get; set; }
         public string? Description { get; set; }
     }
