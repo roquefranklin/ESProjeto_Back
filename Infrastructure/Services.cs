@@ -11,6 +11,7 @@ namespace ESProjeto_Back.Infrastructure
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IStopPointService, StopPointService>();
             services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<ISpecificReviewService, SpecificReviewService>();
             return services;
         }
     }
