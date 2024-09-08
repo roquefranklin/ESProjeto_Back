@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ESProjeto_Back.Controllers
 {
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("[Controller]")]
     [Authorize]
     public class SpecificReviewController : ControllerBase
     {

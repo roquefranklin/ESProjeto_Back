@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace ESProjeto_Back.Controllers
 {
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("[Controller]")]
     [Authorize]
     public class ReviewController : ControllerBase
     {
