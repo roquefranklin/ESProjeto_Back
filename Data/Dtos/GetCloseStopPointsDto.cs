@@ -11,5 +11,6 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Name { get; set; } = String.Empty;
+        public string Description { get; set; } = String.Empty;
     }
 }

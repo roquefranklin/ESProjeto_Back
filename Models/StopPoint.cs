@@ -15,6 +15,7 @@ namespace ESProjeto_Back.Models
         [Required(ErrorMessage = "The {0} is required")]
         public string Name { get; set; }
         [Required(ErrorMessage = "The {0} is required")]
+        public string Description { get; set; }
         public GeolocationPosition geolocalizacao { get; set; } = null!;
         [Required(ErrorMessage = "The {0} is required"), MinLength(-90), MaxLength(90)]
         public float latitude { get; set; }

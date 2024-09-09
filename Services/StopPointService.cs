@@ -56,6 +56,7 @@ namespace ESProjeto_Back.Services
                 longitude = longitude,
                 creationDate = DateTime.Now,
                 Name = newStopPoint.Name,
+                Description = newStopPoint.Description,
                 User = user,
                 UserId = user.Id
             };
@@ -84,6 +85,7 @@ namespace ESProjeto_Back.Services
             {
                 Id = stopPointData.Id,
                 Name = stopPointData.Name,
+                Description = stopPointData.Description,
                 Latitude = stopPointData.latitude,
                 Longitude = stopPointData.longitude
             };

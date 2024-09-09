@@ -29,12 +29,19 @@ namespace ESProjeto_Back.Repositories
         {
 
             var locations = _context.StopPoints.FromSql(
-                $"SELECT  Id,  Name,  Latitude,  Longitude,  geolocalizacaoId, userId, creationDate, (6371 * ACOS(COS(RADIANS({latitude})) * COS(RADIANS(Latitude)) * COS(RADIANS(Longitude) - RADIANS({longitude})) + SIN(RADIANS({latitude})) * SIN(RADIANS(Latitude)))) AS Distance FROM StopPoints ORDER BY Distance"
+                $"SELECT  Id,  Name, COALESCE(description, '') as Description,  Latitude,  Longitude,  geolocalizacaoId, userId, creationDate, (6371 * ACOS(COS(RADIANS({latitude})) * COS(RADIANS(Latitude)) * COS(RADIANS(Longitude) - RADIANS({longitude})) + SIN(RADIANS({latitude})) * SIN(RADIANS(Latitude)))) AS Distance FROM StopPoints ORDER BY Distance"
                 ).ToList();
 
             GetCloseStopPointsDto stoppoints = new GetCloseStopPointsDto()
             {
-                StopPoints = locations.Select(stopPointDb => new StopPointData() { Id = stopPointDb.Id, Latitude = stopPointDb.latitude, Longitude = stopPointDb.longitude, Name = stopPointDb.Name }).ToList()
+                StopPoints = locations.Select(stopPointDb => new StopPointData() { 
+                    Id = stopPointDb.Id, 
+                    Latitude = stopPointDb.latitude, 
+                    Longitude = stopPointDb.longitude, 
+                    Name = stopPointDb.Name, 
+                    Description = stopPointDb.Description != null ? stopPointDb.Description : string.Empty // Tratar NULL aqui
+                    }).ToList()
+
             };
 
             return stoppoints;
