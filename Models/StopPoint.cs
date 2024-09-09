@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ESProjeto_Back.Models
 {
+    [Table("StopPoints")]
     public class StopPoint
     {
         [Key]
@@ -43,14 +45,14 @@ namespace ESProjeto_Back.Models
         public float? altitude { get; set; } = null;
         public float? altitudeAccuracy { get; set; } = null;
         public float? heading { get; set; } = null;
-        public float? latitude { get; set; } = null;
-        public float? longitude { get; set; } = null;
+        public double? latitude { get; set; } = null;
+        public double? longitude { get; set; } = null;
         public float? speed { get; set; } = null;
 
         [JsonConstructor]
         public GeolocationCoordinates() { }
 
-        public GeolocationCoordinates(float latitude, float longitude)
+        public GeolocationCoordinates(double latitude, double longitude)
         {
             this.latitude = latitude;
             this.longitude = longitude;

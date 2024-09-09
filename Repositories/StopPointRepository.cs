@@ -17,7 +17,7 @@ namespace ESProjeto_Back.Repositories
             _context = context;
         }
 
-        public Guid SetNewStopPoint(StopPoint stopPoint, float latitude, float longitude)
+        public Guid SetNewStopPoint(StopPoint stopPoint, double latitude, double longitude)
         {
             stopPoint.Id = Guid.NewGuid();
             _context.Add(stopPoint);
@@ -25,11 +25,11 @@ namespace ESProjeto_Back.Repositories
             return stopPoint.Id;
         }
 
-        public GetCloseStopPointsDto GetPointsOnRadiousOf(float latitude, float longitude, float radius)
+        public GetCloseStopPointsDto GetPointsOnRadiousOf(double latitude, double longitude, float radius)
         {
 
             var locations = _context.StopPoints.FromSql(
-                $"SELECT  Id,  Name,  Latitude,  Longitude,  geolocalizacaoId, userId, creationDate, (6371 * ACOS(COS(RADIANS({latitude})) * COS(RADIANS(Latitude)) * COS(RADIANS(Longitude) - RADIANS({longitude})) + SIN(RADIANS({latitude})) * SIN(RADIANS(Latitude)))) AS Distance  FROM stoppoints HAVING  Distance < {radius} ORDER BY Distance"
+                $"SELECT  Id,  Name,  Latitude,  Longitude,  geolocalizacaoId, userId, creationDate, (6371 * ACOS(COS(RADIANS({latitude})) * COS(RADIANS(Latitude)) * COS(RADIANS(Longitude) - RADIANS({longitude})) + SIN(RADIANS({latitude})) * SIN(RADIANS(Latitude)))) AS Distance FROM StopPoints ORDER BY Distance"
                 ).ToList();
 
             GetCloseStopPointsDto stoppoints = new GetCloseStopPointsDto()
